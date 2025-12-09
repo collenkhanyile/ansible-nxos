@@ -41,6 +41,7 @@ Note:
 Ensure that you are using the correct .ssh directory for the user executing Ansible.
 To verify the key path and SSH behavior, run:
 
+bash
 ssh admin@10.0.0.208 -v
 
 
