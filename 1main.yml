@@ -42,3 +42,12 @@
            enabled: true
        state: merged
      loop: "{{ all_layer3_interfaces | flatten(1) }}"
+
+   - name: Configure IP Address on L3 Interfaces
+     cisco.nxos.nxos_l3_interfaces:
+       config:
+         - name: "{{ item.interface }}"
+           ipv4:
+             - address: "{{ item.ip_address }}/{{ item.mask }}"
+       state: merged
+     loop: "{{ all_layer3_interfaces | flatten(1) }}"

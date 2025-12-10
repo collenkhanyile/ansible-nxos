@@ -16,7 +16,7 @@ layer3_physical_interfaces: &l3
 loopback_interfaces: &lo
   - interface: loopback0
     description: Routing Loopback
-    ip_address: 10.0.0.1
+    ip_address: 5.5.5.5
     mask: 32
   - interface: loopback250
     description: PIM Anycast RP Loopback
