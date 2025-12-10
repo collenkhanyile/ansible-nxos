@@ -26,11 +26,11 @@
   #      state: enabled
   #    loop: "{{ features }}"
 
-   - name: Enable Features
-     cisco.nxos.nxos_feature:
-       feature: "{{ item }}"
-       state: enabled
-     loop: "{{ enabled_features }}"
+  #  - name: Enable Features
+  #    cisco.nxos.nxos_feature:
+  #      feature: "{{ item }}"
+  #      state: enabled
+  #    loop: "{{ enabled_features }}"
 
    - name: Configure L3 Interface(s)
      cisco.nxos.nxos_interfaces:
