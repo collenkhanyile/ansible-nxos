@@ -1,0 +1,29 @@
+- name: Test NXOS access
+  hosts: nexus
+  gather_facts: no
+
+  tasks:
+   - name: Run "show version"
+     cisco.nxos.nxos_command:
+       commands:
+         - show version
+     register: output
+   - name: Print output
+     debug:
+       var: output.stdout_lines
+
+
+#############################################
+   - name: Run "interface brief"
+     cisco.nxos.nxos_command:
+       commands:
+         - show vlan
+     register: output
+
+   - name: Print output
+     debug:
+       var: output.stdout_lines
+
+   - name: Gather l3_interfaces facts from the device using nxos_l3_interfaces
+     cisco.nxos.nxos_l2_interfaces:
+       state: gathered

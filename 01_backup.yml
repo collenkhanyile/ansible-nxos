@@ -1,0 +1,12 @@
+---
+- name: Backup Nexus Devices 
+  hosts: nexus
+
+  tasks: 
+    - name: Backup Nexus Devices
+      cisco.nxos.nxos_config: 
+        backup: true
+        backup_options: 
+          filename: "{{inventory_hostname}}-backup.txt"
+          dir_path: ./BACKUPS
+          

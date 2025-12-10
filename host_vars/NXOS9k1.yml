@@ -1,0 +1,9 @@
+
+hostname: NXOS9k1 
+
+host_enabled_features: 
+ - l2vpn 
+ - l3vpn
+ - bfd
+
+

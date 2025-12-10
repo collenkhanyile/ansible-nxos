@@ -1,0 +1,18 @@
+---
+# Specific values just for Nexus 
+
+ansible_network_os: "nxos"
+
+enabled_features: 
+ - vpc 
+ - nxapi 
+ - interface-vlan 
+ - lacp 
+ - ldap
+ 
+features:
+  - ospf
+
+ospf:
+  process_id: UNDERLAY
+  area_id: 0.0.0.0

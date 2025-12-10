@@ -1,0 +1,12 @@
+
+hostname {{ hostname }}
+
+{% for ntp_server in ntp_servers %}
+ntp server {{ ntp_server }}
+{% endfor %}
+
+{% for feature in enabled_features + (host_enabled_features | default([])) %}
+feature {{ feature }} 
+{% endfor %}
+
+

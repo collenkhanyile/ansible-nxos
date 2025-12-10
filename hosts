@@ -1,0 +1,15 @@
+## Ansible Hosts File for Lab 
+
+[local]
+localhost 
+
+[nexus]
+#N9KV-1 ansible_host=192.168.1.150
+#N9KV-2 ansible_host=192.168.1.151
+#NXOS9k1CISCO123 ansible_host=10.0.0.209
+NXOS9k1 ansible_host=10.0.0.209
+NXOS9k2 ansible_host=10.0.0.208
+NXOS9k3 ansible_host=10.0.0.212
+NXOS9k4 ansible_host=10.0.0.213
+NXOS9k5 ansible_host=10.0.0.214
+

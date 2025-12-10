@@ -1,0 +1,5 @@
+## Ansible Hosts File for Lab 
+
+[ios]
+H3570-SWITCH01 ansible_host=10.0.0.1
+H1900-HomeRouter01 ansible_host=10.0.0.2

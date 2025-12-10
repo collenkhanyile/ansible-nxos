@@ -1,0 +1,17 @@
+
+hostname NXOS9k1CISCO
+
+ntp server 1.1.1.1
+ntp server 2.2.2.2
+ntp server 4.4.4.4
+
+feature vpc 
+feature nxapi 
+feature interface-vlan 
+feature lacp 
+feature ldap 
+feature l2vpn 
+feature l3vpn 
+feature bfd 
+
+

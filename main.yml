@@ -1,0 +1,49 @@
+---
+
+- name: Test NXOS access
+  hosts: nexus
+  gather_facts: no
+
+  tasks:
+   - name: Run "show version"
+     cisco.nxos.nxos_command:
+       commands:
+         - show version
+     register: output
+
+   - name: Run "show version"
+     cisco.nxos.nxos_config:
+       lines:
+       - 10 permit ip 192.0.2.1/32 any log
+       - 20 permit ip 192.0.2.2/32 any log
+       - 30 permit ip 192.0.2.3/32 any log
+       - 40 permit ip 192.0.2.4/32 any log
+       parents: ip access-list test
+       before: no ip access-list test
+       replace: block
+
+   - name: Override device configuration of all interfaces with provided configuration
+     cisco.nxos.nxos_interfaces:
+       config:
+         - name: Ethernet1/3
+           description: Configured by Ansible Network
+           enabled: true
+         - name: Ethernet1/2
+           description: Configured by Ansible Network
+           enabled: true
+         - description: mgmt interface
+           name: mgmt0
+       state: overridden
+
+   - name: Replaces device configuration of listed interfaces with provided configuration
+     cisco.nxos.nxos_interfaces:
+       config:
+         - name: Ethernet1/1
+           description: Configured by Ansible
+           enabled: true
+           mtu: 1500
+         - name: Ethernet1/4
+           description: Configured by Ansible Network
+           enabled: false
+           mode: layer2
+       state: replaced

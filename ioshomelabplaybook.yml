@@ -1,0 +1,20 @@
+---
+- name: Cisco show running-config
+  hosts: ios
+  gather_facts: false
+  connection: network_cli
+  vars:
+    ansible_network_os: cisco.ios.ios
+    ansible_user: "{{ lookup('env', 'ANSIBLE_NET_USERNAME') | default('admin', true) }}"
+    ansible_password: "{{ lookup('env', 'ANSIBLE_NET_PASSWORD') | default('password', true) }}"
+
+  tasks:
+    - name: Run "show running-config"
+      cisco.ios.ios_command:
+        commands:
+          - show running-config
+      register: output
+
+    - name: Print output
+      debug:
+        var: output.stdout_lines
