@@ -1,6 +1,31 @@
 
 hostname: NXOS9k2
 
+layer3_physical_interfaces: &l3
+  - interface: Ethernet1/1
+    description: Link to NXOS9k2 Eth1/1
+    ip_address: 192.168.1.1
+    mask: 31
+    mtu: 9216
+  - interface: Ethernet1/2
+    description: To L2 Eth1/1
+    ip_address: 192.168.1.2
+    mask: 31
+    mtu: 9216
+
+loopback_interfaces: &lo
+  - interface: loopback0
+    description: Routing Loopback
+    ip_address: 2.2.2.2
+    mask: 32
+  # - interface: loopback250
+  #   description: PIM Anycast RP Loopback
+  #   ip_address: 10.250.250.1
+  #   mask: 32
+
+all_layer3_interfaces:
+  - *l3
+  - *lo
 
 
 
