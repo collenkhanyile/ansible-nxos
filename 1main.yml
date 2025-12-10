@@ -51,3 +51,25 @@
              - address: "{{ item.ip_address }}/{{ item.mask }}"
        state: merged
      loop: "{{ all_layer3_interfaces | flatten(1) }}"
+
+   - name: Configure Underlay OSPF Process
+     cisco.nxos.nxos_ospfv2:
+       config:
+         processes:
+           - process_id: "{{ ospf.process_id }}"
+             router_id: "{{ loopback_interfaces[0].ip_address }}"
+       state: merged
+   
+   - name: Configure Interface Association to OSPF Process
+     cisco.nxos.nxos_ospf_interfaces:
+       config:
+         - name: "{{ item.interface }}"
+           address_family:
+             - afi: ipv4
+               network: point-to-point
+               processes:
+                 - process_id: "{{ ospf.process_id }}"
+                   area:
+                     area_id: "{{ ospf.area_id }}"
+       state: merged
+     loop: "{{ all_layer3_interfaces | flatten(1) }}"
