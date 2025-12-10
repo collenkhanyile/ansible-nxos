@@ -2,8 +2,8 @@
 hostname: NXOS9k1 
 
 host_enabled_features: 
- - l2vpn 
- - l3vpn
+#  - l2vpn 
+#  - l3vpn
  - bfd
 
 layer3_physical_interfaces: &l3
