@@ -1,6 +1,17 @@
 
 hostname: NXOS9k5
 
+layer3_physical_interfaces: &l3
+  - interface: Ethernet1/1
+    description: To L1 Eth1/11
+    ip_address: 10.1.1.0
+    mask: 31
+    mtu: 9216
+  - interface: Ethernet1/2
+    description: To L2 Eth1/11
+    ip_address: 10.1.1.2
+    mask: 31
+    mtu: 9216
 
 
 
