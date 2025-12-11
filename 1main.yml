@@ -73,3 +73,11 @@
                      area_id: "{{ ospf.area_id }}"
        state: merged
      loop: "{{ all_layer3_interfaces | flatten(1) }}"
+
+   - name: Delete L3 attributes of given interfaces (This won't delete the interface
+       itself).
+     cisco.nxos.nxos_l3_interfaces:
+       config:
+       - name: "{{ item.interface }}"
+       state: deleted
+     loop: "{{ layer3_delete_interfaces | flatten(1) }}"
