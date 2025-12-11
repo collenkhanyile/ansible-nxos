@@ -86,4 +86,4 @@
        config:
        - name: "{{ item.interface }}"
        state: deleted
-  #    loop: "{{ layer3_delete_interfaces | flatten(1) }}"
+     loop: "{{ layer3_delete_interfaces | flatten(1) }}"
