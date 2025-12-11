@@ -12,7 +12,7 @@ layer3_physical_interfaces: &l3
     ip_address: 10.1.1.2
     mask: 31
     mtu: 9216
-state: absent
+    state: deleted
 
 loopback_interfaces: &lo
   - interface: loopback0
