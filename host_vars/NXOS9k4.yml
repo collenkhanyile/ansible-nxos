@@ -27,5 +27,5 @@ all_layer3_interfaces:
   - *l3
   - *lo
 
-
+layer3_delete_interfaces:
 
