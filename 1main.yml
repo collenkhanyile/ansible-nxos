@@ -78,9 +78,10 @@
     cisco.nxos.nxos_command:
       commands:
       - command: copy running start
-
-  - name: Delete L3 attributes of given interfaces (This won't delete the interface itself).
-    cisco.nxos.nxos_l3_interfaces:
-      config:
-      - name: "{{ item.interface }}"
-      state: deleted
+  #  - name: Delete L3 attributes of given interfaces (This won't delete the interface
+  #      itself).
+  #    cisco.nxos.nxos_l3_interfaces:
+  #      config:
+  #      - name: "{{ item.interface }}"
+  #      state: deleted
+  #    loop: "{{ layer3_delete_interfaces | flatten(1) }}"
