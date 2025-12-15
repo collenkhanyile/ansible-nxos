@@ -10,7 +10,7 @@
   #      config:
   #        hostname: "{{ hostname }}"
   #      state: merged
-   
+
   #  - name: Configure NTP Server
   #    cisco.nxos.nxos_ntp_global:
   #      config:
@@ -19,7 +19,7 @@
   #            use_vrf: management
   #            prefer: True
   #      state: merged
-   
+
   #  - name: Enable Features
   #    cisco.nxos.nxos_feature:
   #      feature: "{{ item }}"
@@ -32,58 +32,55 @@
   #      state: enabled
   #    loop: "{{ enabled_features }}"
 
-   - name: Configure L3 Interface(s)
-     cisco.nxos.nxos_interfaces:
-       config:
-         - name: "{{ item['interface'] }}"
-           description: "{{ item['description'] }}"
-           mode: "{{ 'layer3' if 'Ethernet' in item['interface'] else omit }}"
-           mtu: "{{ item['mtu'] if 'Ethernet' in item['interface'] else omit }}"
-           enabled: true
-       state: merged
-     loop: "{{ all_layer3_interfaces | flatten(1) }}"
+  - name: Configure L3 Interface(s)
+    cisco.nxos.nxos_interfaces:
+      config:
+      - name: "{{ item['interface'] }}"
+        description: "{{ item['description'] }}"
+        mode: "{{ 'layer3' if 'Ethernet' in item['interface'] else omit }}"
+        mtu: "{{ item['mtu'] if 'Ethernet' in item['interface'] else omit }}"
+        enabled: true
+      state: merged
+    loop: "{{ all_layer3_interfaces | flatten(1) }}"
 
-   - name: Configure IP Address on L3 Interfaces
-     cisco.nxos.nxos_l3_interfaces:
-       config:
-         - name: "{{ item.interface }}"
-           ipv4:
-             - address: "{{ item.ip_address }}/{{ item.mask }}"
-       state: merged
-     loop: "{{ all_layer3_interfaces | flatten(1) }}"
+  - name: Configure IP Address on L3 Interfaces
+    cisco.nxos.nxos_l3_interfaces:
+      config:
+      - name: "{{ item.interface }}"
+        ipv4:
+        - address: "{{ item.ip_address }}/{{ item.mask }}"
+      state: merged
+    loop: "{{ all_layer3_interfaces | flatten(1) }}"
 
-   - name: Configure Underlay OSPF Process
-     cisco.nxos.nxos_ospfv2:
-       config:
-         processes:
-           - process_id: "{{ ospf.process_id }}"
-             router_id: "{{ loopback_interfaces[0].ip_address }}"
-       state: merged
-   
-   - name: Configure Interface Association to OSPF Process
-     cisco.nxos.nxos_ospf_interfaces:
-       config:
-         - name: "{{ item.interface }}"
-           address_family:
-             - afi: ipv4
-               network: point-to-point
-               processes:
-                 - process_id: "{{ ospf.process_id }}"
-                   area:
-                     area_id: "{{ ospf.area_id }}"
-       state: merged
-     loop: "{{ all_layer3_interfaces | flatten(1) }}"
+  - name: Configure Underlay OSPF Process
+    cisco.nxos.nxos_ospfv2:
+      config:
+        processes:
+        - process_id: "{{ ospf.process_id }}"
+          router_id: "{{ loopback_interfaces[0].ip_address }}"
+      state: merged
 
-   - name: save Configures on all the devices
-     cisco.nxos.nxos_command:
-       commands:
-       - command: copy running start
+  - name: Configure Interface Association to OSPF Process
+    cisco.nxos.nxos_ospf_interfaces:
+      config:
+      - name: "{{ item.interface }}"
+        address_family:
+        - afi: ipv4
+          network: point-to-point
+          processes:
+          - process_id: "{{ ospf.process_id }}"
+            area:
+              area_id: "{{ ospf.area_id }}"
+      state: merged
+    loop: "{{ all_layer3_interfaces | flatten(1) }}"
 
+  - name: save Configures on all the devices
+    cisco.nxos.nxos_command:
+      commands:
+      - command: copy running start
 
-   - name: Delete L3 attributes of given interfaces (This won't delete the interface
-       itself).
-     cisco.nxos.nxos_l3_interfaces:
-       config:
-       - name: "{{ item.interface }}"
-       state: deleted
-     loop: "{{ layer3_delete_interfaces | flatten(1) }}"
+  - name: Delete L3 attributes of given interfaces (This won't delete the interface itself).
+    cisco.nxos.nxos_l3_interfaces:
+      config:
+      - name: "{{ item.interface }}"
+      state: deleted
